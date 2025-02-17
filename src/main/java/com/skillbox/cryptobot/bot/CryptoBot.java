@@ -21,7 +21,7 @@ public class CryptoBot extends TelegramLongPollingCommandBot {
             List<IBotCommand> commandList
     ) {
         super(botToken);
-        log.info("CryptoBot -> constructor -> Bot started. BotToken: {}, BotUsername: {}", botToken, botUsername);
+        log.info("CryptoBot -> constructor -> Bot started. , BotUsername: {}", botUsername);
         this.botUsername = botUsername;
 
         commandList.forEach(this::register);

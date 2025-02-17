@@ -16,21 +16,19 @@ binance:
 spring:
   application:
     name:
+
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     generate-ddl: true
-db:
-  driver:
-    name: org.postgresql.Driver
-  url: jdbc:postgresql://localhost:5432/db
-  user: root
-  password: root
-  hikari:
-    schema: telegram_bot_schema
-    connection-init-sql: CREATE SCHEMA IF NOT EXISTS telegram_bot_schema
-    connection-timeout: 10000
-
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db
+    username: root
+    password: root
+    hikari:
+      schema: telegram_bot_schema
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS telegram_bot_schema
+      connection-timeout: 10000
 
   flyway:
     baseline-on-migrate: true
