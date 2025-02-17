@@ -15,13 +15,13 @@ public class CryptoBot extends TelegramLongPollingCommandBot {
 
     private final String botUsername;
 
-
     public CryptoBot(
             @Value("${telegram.bot.token}") String botToken,
             @Value("${telegram.bot.username}") String botUsername,
             List<IBotCommand> commandList
     ) {
         super(botToken);
+        log.info("CryptoBot -> constructor -> Bot started. BotToken: {}, BotUsername: {}", botToken, botUsername);
         this.botUsername = botUsername;
 
         commandList.forEach(this::register);
