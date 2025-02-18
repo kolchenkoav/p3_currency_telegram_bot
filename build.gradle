@@ -12,6 +12,7 @@ ext {
 	jaxbApiVersion = '2.3.1'
 	postgresqlDriverVersion = '42.6.0'
 	springOrmVersion = '6.0.13'
+	testcontainersVersion = '1.17.6'
 }
 
 group = 'com.example'
@@ -45,7 +46,8 @@ dependencies {
 
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+	testImplementation "org.testcontainers:postgresql:$testcontainersVersion"
+	testImplementation "org.testcontainers:junit-jupiter:$testcontainersVersion"
 //	implementation 'org.flywaydb:flyway-database-postgresql:11.2.0'
 //	implementation 'org.flywaydb:flyway-core:9.22.0'
 }
