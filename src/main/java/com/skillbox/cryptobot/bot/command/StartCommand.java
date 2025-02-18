@@ -11,10 +11,11 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.Arrays;
+
 /**
  * Обработка команды начала работы с ботом
  */
-
 
 @Slf4j
 @AllArgsConstructor
@@ -40,11 +41,19 @@ public class StartCommand implements IBotCommand {
         answer.setText("""
                 Привет! Данный бот помогает отслеживать стоимость биткоина.
                 Поддерживаемые команды:
-                 /subscribe - подписаться на рассылку стоимости биткоина
+                 /subscribe [число] - подписаться на рассылку стоимости биткоина в USD
                  /get_price - получить стоимость биткоина
                  /get_subscriptions - получить текущую подписку
-                 /unsubscribe - отписаться от рассылки стоимости биткоина
+                 /unsubscribe - отменить подписку на рассылку стоимости биткоина
                 """);
+
+        log.info("message message.getChat().getId(): {}", message.getChat().getId());
+        subscriberService.save(message.getChat().getId(), null);
+        log.info("message message.getChat().getFirstName(): {}", message.getChat().getFirstName());
+        log.info("message message.getChat().getLastName(): {}", message.getChat().getLastName());
+        log.info("message message.getChat().getUserName(): {}", message.getChat().getUserName());
+
+        log.info("arguments: {}", Arrays.toString(arguments));
         try {
             absSender.execute(answer);
         } catch (TelegramApiException e) {

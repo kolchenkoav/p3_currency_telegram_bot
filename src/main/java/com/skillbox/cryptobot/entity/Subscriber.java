@@ -15,6 +15,6 @@ public class Subscriber {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
-    private String telegramId;
+    private Long telegramId;
     private Double price;
 }
