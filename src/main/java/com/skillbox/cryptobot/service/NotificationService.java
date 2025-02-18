@@ -49,7 +49,7 @@ public class NotificationService {
             List<Subscriber> subscribers = subscriberRepository.findAll();
 
             for (Subscriber subscriber : subscribers) {
-                if (subscriber.getPrice() != null && currentPrice >= subscriber.getPrice()) {
+                if (subscriber.getPrice() != null && currentPrice <= subscriber.getPrice()) {
                     Long telegramId = subscriber.getTelegramId();
                     Instant lastNotification = lastNotificationTime.get(telegramId);
                     Instant now = Instant.now();
