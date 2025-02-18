@@ -29,4 +29,22 @@ public class SubscriberService {
         Subscriber savedSubscriber = subscriberRepository.save(subscriber);
         log.info("Subscriber saved with UUID: {}, Telegram ID: {}, Price: {}", savedSubscriber.getUuid(), savedSubscriber.getTelegramId(), savedSubscriber.getPrice());
     }
+
+    public Double getSubscriptionPrice(Long telegramId) {
+        log.info("Getting subscription price for telegram ID: {}", telegramId);
+        Optional<Subscriber> subscriber = subscriberRepository.findByTelegramId(telegramId);
+        return subscriber.map(Subscriber::getPrice).orElse(null);
+    }
+
+    public boolean unsubscribe(Long telegramId) {
+        Optional<Subscriber> subscriber = subscriberRepository.findByTelegramId(telegramId);
+        if (subscriber.isPresent()) {
+            subscriberRepository.delete(subscriber.get());
+            log.info("Subscriber with Telegram ID: {} unsubscribed", telegramId);
+            return true;
+        } else {
+            log.info("No active subscription found for Telegram ID: {}", telegramId);
+            return false;
+        }
+    }
 }

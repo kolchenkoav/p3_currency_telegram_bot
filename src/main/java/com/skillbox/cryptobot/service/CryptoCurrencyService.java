@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-@Service
 @Slf4j
+@Service
 public class CryptoCurrencyService {
     private final AtomicReference<Double> price = new AtomicReference<>();
     private final BinanceClient client;
