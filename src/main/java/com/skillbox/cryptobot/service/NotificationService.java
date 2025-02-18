@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Сервис для отправки уведомлений подписчикам.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -42,6 +45,9 @@ public class NotificationService {
 
     private final Map<Long, Instant> lastNotificationTime = new HashMap<>();
 
+    /**
+     * Проверяет подписки и отправляет уведомления, если необходимо.
+     */
     @Scheduled(fixedDelayString = "${telegram.bot.notify.frequency.value}", timeUnit = TimeUnit.MINUTES)
     public void checkSubscriptions() {
         try {
@@ -61,10 +67,16 @@ public class NotificationService {
                 }
             }
         } catch (IOException e) {
-            log.error("Error while checking subscriptions", e);
+            log.error("Ошибка при проверке подписок", e);
         }
     }
 
+    /**
+     * Отправляет уведомление пользователю.
+     *
+     * @param telegramId ID пользователя в Telegram.
+     * @param currentPrice текущая цена биткоина.
+     */
     private void sendNotification(Long telegramId, double currentPrice) {
         SendMessage message = new SendMessage();
         message.setChatId(telegramId.toString());
@@ -73,7 +85,7 @@ public class NotificationService {
         try {
             cryptoBot.execute(message);
         } catch (TelegramApiException e) {
-            log.error("Error while sending notification to user {}", telegramId, e);
+            log.error("Ошибка при отправке уведомления пользователю {}", telegramId, e);
         }
     }
 }

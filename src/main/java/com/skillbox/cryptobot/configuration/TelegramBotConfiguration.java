@@ -8,9 +8,19 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+/**
+ * Конфигурация для Telegram бота.
+ */
 @Configuration
 @Slf4j
 public class TelegramBotConfiguration {
+
+    /**
+     * Создает и регистрирует TelegramBotsApi с использованием CryptoBot.
+     *
+     * @param cryptoBot бот, который будет зарегистрирован.
+     * @return экземпляр TelegramBotsApi.
+     */
     @Bean
     TelegramBotsApi telegramBotsApi(CryptoBot cryptoBot) {
         TelegramBotsApi botsApi = null;
@@ -18,7 +28,7 @@ public class TelegramBotConfiguration {
             botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(cryptoBot);
         } catch (TelegramApiException e) {
-            log.error("Error occurred while sending message to telegram!", e);
+            log.error("Ошибка при отправке сообщения в Telegram!", e);
         }
         return botsApi;
     }
