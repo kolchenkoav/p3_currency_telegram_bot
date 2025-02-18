@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -21,7 +22,10 @@ public class UserController {
     public List<String> getUsers() {
         List<Subscriber> subscribers = subscriberService.getAllSubscribers();
         return subscribers.stream()
-                .map(Subscriber::getTelegramId)
-                .map(cryptoBot::getUserName).toList();
+                .map(subscriber -> {
+                    String userName = cryptoBot.getUserName(subscriber.getTelegramId());
+                    return String.format("%d, %s, %.3f", subscriber.getTelegramId(), userName, subscriber.getPrice());
+                })
+                .collect(Collectors.toList());
     }
 }
